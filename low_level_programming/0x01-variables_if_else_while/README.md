@@ -14,3 +14,12 @@
 
 - **2. alphABET**
     - Write a program that prints the alphabet in lowercase, and then in uppercase, followed by a new line.
+
+    
+- **3.all alphaBET expect `q` and `e`**
+    - Write a program that prints the alphabets in lowercase followed by a new line.
+        - Print all the letters expect `q` and `e`
+
+
+- **4. Smile in the mirror**
+    - Write a program that prints the lowercase alphabet in reverse, followed by a new line.
