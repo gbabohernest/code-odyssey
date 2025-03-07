@@ -23,3 +23,19 @@
 
 - **4. Smile in the mirror**
     - Write a program that prints the lowercase alphabet in reverse, followed by a new line.
+
+
+
+- **5. Single-digit combo**
+    - Write a program that prints all possible combination of single-digit numbers.
+        - Numbers must be seperated by `,` followed by a space.
+        - Printed in ascending order.
+
+
+- **6. Inventing is a combination of brains and materials. The more brains you use, the less material you need**
+    - Write a program that prints all possible different combinations of two digits.
+        - Numbers must be separated by ,, followed by a space
+        - The two digits must be different
+        - `01` and `10` are considered the same combination of the two digits `0` and `1`
+        - Print only the smallest combination of two digits
+        - Numbers should be printed in ascending order, with two digits
