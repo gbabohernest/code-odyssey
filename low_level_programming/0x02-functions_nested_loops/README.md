@@ -19,3 +19,11 @@
 **8. Jack Bauer**
   - Write a function that prints every minute of the day of Jack Bauer, starting from `00:00` to `23:59`.
   - Prototype: `void jack_bauer(void);`
+
+**11. 98 Battery Street, the OG**
+  - Write a function that prints all natural numbers from `n` to `98`, followed by a new line.
+    - Prototype: `void print_to_98(int n);`
+    - Numbers must be separated by a comma, followed by space.
+    - Numbers should be printed in order
+    - The first printed number should be the number passed to your function
+    - The last printed number should be 98
