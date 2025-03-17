@@ -55,3 +55,11 @@
   - Numbers must e separated by comma, followed by a space
   - The num should be displayed in the same order as they are stored in the array.
   - Allowed to use `printf`
+
+
+**9.strcpy**
+   - Prototype: `char *_strcpy(char *dest, char *src);`  
+ - Write a function that copies the string pointed by `src`, including the terminating null byte(`\0`), to the buffer pointed to by `dest`.
+   - Return value: the pointer to `dest`
+
+
