@@ -17,11 +17,4 @@ const getStudentGrade = (score) => {
   if (score <= 59) return 'F';
 };
 
-// test;
-/*
-console.log(getStudentGrade(96));
-console.log(getStudentGrade(82));
-console.log(getStudentGrade(56));
-*/
-
 module.exports = getStudentGrade;
