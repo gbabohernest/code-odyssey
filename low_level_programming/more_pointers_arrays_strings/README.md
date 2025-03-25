@@ -23,4 +23,8 @@
    - Prototype: `char *_strncpy(char *dest, char *src, int n);`
    - Your function should work exactly like `strncpy` Run `man strncpy` to learn more. 
  
-
+ 
+**3.strcmp**
+ - Write a function that compares two strings.
+    - Prototype: `int _strcmp(char *s1, char *s2);`
+    - Your function should work exactly like `strcmp`. Run `man strcmp` to learn more.
