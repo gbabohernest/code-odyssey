@@ -1,15 +1,20 @@
-import express from 'express';
-import { PORT, NODE_ENV } from './config/env.js';
+import express from "express";
+import { PORT } from "./config/env.js";
+import connectToDatabase from "./database/mongodb.js";
+import taskRouter from "./routes/task.routes.js";
 
 const app = express();
+app.use(express.json());
+app.use("/api/v1/tasks", taskRouter);
 
-app.get('/', (req, res) => {
-  res.send('okay running');
+app.get("/", (req, res) => {
+  res
+    .status(200)
+    .json({ success: true, message: "Welcome to the task-manager-api." });
 });
 
 app.listen(PORT, () => {
-  console.log({
-    success: true,
-    message: `task-manager-api is running on http://localhost:${PORT}`,
-  });
+  console.log(`Task Manager Api is running on http://localhost:${PORT}`);
 });
+
+await connectToDatabase();
