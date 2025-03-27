@@ -1,10 +1,12 @@
-import { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 
-const taskSchema = new Schema(
+const taskSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       require: [true, 'task name is required'],
+      trim: true,
+      maxLength: [20, 'task name cannot be more than 20 characters'],
     },
 
     completed: {
@@ -14,3 +16,7 @@ const taskSchema = new Schema(
   },
   { timestamps: true }
 );
+
+const Task = mongoose.model('Task', taskSchema);
+
+export default Task;
