@@ -36,4 +36,21 @@ const createProduct = async (req, res) => {
   }
 };
 
-export { getProducts, createProduct };
+const getProduct = async (req, res) => {
+  try {
+    const { id: productID } = req.params;
+    const product = await Product.findById(productID);
+    if (!product) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Product Not Found!" });
+    }
+
+    res.status(200).json({ success: true, data: product });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: `Something went wrong: ${error}` });
+  }
+};
+export { getProducts, createProduct, getProduct };
