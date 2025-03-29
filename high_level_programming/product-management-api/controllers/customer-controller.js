@@ -21,4 +21,17 @@ const getCustomers = async (req, res) => {
   }
 };
 
-export { getCustomers };
+const createCustomer = async (req, res) => {
+  try {
+    const customer = await Customer.create(req.body);
+    res
+      .status(201)
+      .json({ success: true, message: "customer created", data: customer });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: `something went wrong: ${error}` });
+  }
+};
+
+export { getCustomers, createCustomer };
