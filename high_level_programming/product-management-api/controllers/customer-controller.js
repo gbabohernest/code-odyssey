@@ -34,4 +34,22 @@ const createCustomer = async (req, res) => {
   }
 };
 
-export { getCustomers, createCustomer };
+const getCustomer = async (req, res) => {
+  try {
+    const { id: customerID } = req.params;
+    const customer = await Customer.findById(customerID);
+
+    if (!customer) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Customer NOT Found" });
+    }
+
+    res
+      .status(200)
+      .json({ success: true, message: "customer retrieved", data: customer });
+  } catch (error) {
+    res.status(400).json({ success: false, message: "Bad Request" });
+  }
+};
+export { getCustomers, createCustomer, getCustomer };
