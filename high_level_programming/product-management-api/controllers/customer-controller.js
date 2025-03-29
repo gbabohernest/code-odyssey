@@ -52,4 +52,24 @@ const getCustomer = async (req, res) => {
     res.status(400).json({ success: false, message: "Bad Request" });
   }
 };
-export { getCustomers, createCustomer, getCustomer };
+
+const updateCustomer = async (req, res) => {
+  try {
+    const { id: customerID } = req.params;
+    const customer = await Customer.findByIdAndUpdate(customerID, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!customer) {
+      return res
+        .status(404)
+        .json({ success: false, message: "customer NOT Found" });
+    }
+
+    res.status(200).json({ success: true, message: "customer NOT found" });
+  } catch (error) {
+    res.status(400).json({ success: false, message: "Bad request" });
+  }
+};
+
+export { getCustomers, createCustomer, getCustomer, updateCustomer };
