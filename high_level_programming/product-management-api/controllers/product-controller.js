@@ -53,4 +53,28 @@ const getProduct = async (req, res) => {
       .json({ success: false, message: `Something went wrong: ${error}` });
   }
 };
-export { getProducts, createProduct, getProduct };
+
+const updateProduct = async (req, res) => {
+  try {
+    const { id: productID } = req.params;
+    const product = await Product.findByIdAndUpdate(productID, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!product) {
+      return res
+        .status(404)
+        .json({ success: true, message: "Product Not Found!" });
+    }
+
+    res
+      .status(200)
+      .json({ success: true, message: "update success", data: product });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: `Something went wrong: ${error}` });
+  }
+};
+export { getProducts, createProduct, getProduct, updateProduct };
