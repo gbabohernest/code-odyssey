@@ -77,4 +77,21 @@ const updateProduct = async (req, res) => {
       .json({ success: false, message: `Something went wrong: ${error}` });
   }
 };
-export { getProducts, createProduct, getProduct, updateProduct };
+
+const deleteProduct = async (req, res) => {
+  try {
+    const product = await Product.findByIdAndDelete(req.params.id);
+    if (!product) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Product Not Found!" });
+    }
+
+    res.status(204);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: `Something went wrong: ${error}` });
+  }
+};
+export { getProducts, createProduct, getProduct, updateProduct, deleteProduct };
