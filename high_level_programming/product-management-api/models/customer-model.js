@@ -31,6 +31,10 @@ const customerSchema = new mongoose.Schema(
       required: [true, "phone number is required"],
       minLength: [10, "phone number should be 10 digit least."],
     },
+    code: {
+      type: Number,
+      default: 256,
+    },
   },
   { timestamps: true },
 );
