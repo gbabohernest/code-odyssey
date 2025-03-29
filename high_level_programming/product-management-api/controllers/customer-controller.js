@@ -49,7 +49,7 @@ const getCustomer = async (req, res) => {
       .status(200)
       .json({ success: true, message: "customer retrieved", data: customer });
   } catch (error) {
-    res.status(400).json({ success: false, message: "Bad Request" });
+    res.status(400).json({ success: false, message: `Bad Request : ${error}` });
   }
 };
 
@@ -66,10 +66,33 @@ const updateCustomer = async (req, res) => {
         .json({ success: false, message: "customer NOT Found" });
     }
 
-    res.status(200).json({ success: true, message: "customer NOT found" });
+    res
+      .status(200)
+      .json({ success: true, message: "update success", data: customer });
   } catch (error) {
-    res.status(400).json({ success: false, message: "Bad request" });
+    res.status(400).json({ success: false, message: `Bad request : ${error}` });
   }
 };
 
-export { getCustomers, createCustomer, getCustomer, updateCustomer };
+const deleteCustomer = async (req, res) => {
+  try {
+    const customer = await Customer.findByIdAndDelete(req.params.id);
+    if (!customer) {
+      return res
+        .status(404)
+        .json({ success: false, message: "customer NOT Found" });
+    }
+
+    res.status(204);
+  } catch (error) {
+    res.status(400).json({ success: false, message: `Bad Request : ${error}` });
+  }
+};
+
+export {
+  getCustomers,
+  createCustomer,
+  getCustomer,
+  updateCustomer,
+  deleteCustomer,
+};
