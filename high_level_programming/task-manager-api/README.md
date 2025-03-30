@@ -1,12 +1,7 @@
 # Task Manager API  
 
-A basic REST API built with Express.js for learning purposes. It performs CRUD operations on MongoDB data with basic validation.  
+A basic REST API built with Express.js for learning purposes. It performs CRUD operations on MongoDB data with basic validation and error checking using  a custom error middleware.  
 
-## What's Not Included  
-This API does not handle:  
-- Error checking  
-- Data sanity validation  
-- Middleware  
 
 ## Setup  
 
