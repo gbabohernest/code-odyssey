@@ -13,8 +13,15 @@ app.get("/", (req, res) => {
     .json({ success: true, message: "Welcome to the task-manager-api." });
 });
 
-app.listen(PORT, () => {
-  console.log(`Task Manager Api is running on http://localhost:${PORT}`);
-});
+const startSever = async () => {
+  try {
+    await connectToDatabase();
+    app.listen(PORT, () => {
+      console.log(`Task Manager Api is running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+};
 
-await connectToDatabase();
+await startSever();
