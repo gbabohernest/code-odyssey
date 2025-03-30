@@ -19,7 +19,9 @@ const getSingleTask = asyncWrapper(async (req, res) => {
   const { id: taskID } = req.params;
   const task = await Task.findOne({ _id: taskID });
   if (!task) {
-    return res.status(404).json({ success: false, message: "Task Not Found" });
+    const error = new Error("Task Not Found");
+    error.statusCode = 404;
+    throw error;
   }
   res.status(200).json({ success: true, data: task });
 });
@@ -31,7 +33,9 @@ const updateTask = asyncWrapper(async (req, res) => {
     runValidators: true,
   });
   if (!task) {
-    return res.status(404).json({ success: false, message: "Task Not found" });
+    const error = new Error("Task Not Found");
+    error.statusCode = 404;
+    throw error;
   }
 
   res
@@ -44,7 +48,9 @@ const deleteTask = asyncWrapper(async (req, res) => {
   const task = await Task.findOneAndDelete({ _id: taskID });
 
   if (!task) {
-    return res.status(404).json({ success: false, message: "No task found" });
+    const error = new Error("No Task Found");
+    error.statusCode = 404;
+    throw error;
   }
   res.status(204).end();
 });
