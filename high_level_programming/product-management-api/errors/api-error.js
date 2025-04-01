@@ -15,7 +15,7 @@ class CustomAPIError extends Error {
  * @returns {CustomAPIError} - An instance of CustomAPIError
  */
 const customError = (message, status) => {
-  return new CustomAPIError(message.status);
+  return new CustomAPIError(message, status);
 };
 
 export { customError, CustomAPIError };
