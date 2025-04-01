@@ -1,5 +1,6 @@
 import Customer from "../models/customer-model.js";
 import { asyncMiddleware } from "../middlewares/async-wrapper.middleware.js";
+import { customError } from "../errors/api-error.js";
 
 const getCustomers = asyncMiddleware(async (req, res) => {
   const customers = await Customer.find({});
@@ -15,7 +16,7 @@ const getCustomers = asyncMiddleware(async (req, res) => {
   });
 });
 
-const createCustomer = asyncMiddleware(async (req, res) => {
+const createCustomer = asyncMiddleware(async (req, res, next) => {
   const customer = await Customer.create(req.body);
   res
     .status(201)
@@ -27,9 +28,7 @@ const getCustomer = asyncMiddleware(async (req, res) => {
   const customer = await Customer.findById(customerID);
 
   if (!customer) {
-    return res
-      .status(404)
-      .json({ success: false, message: "Customer NOT Found" });
+    throw customError("Customer NOT Found!", 404);
   }
 
   res
@@ -44,9 +43,7 @@ const updateCustomer = asyncMiddleware(async (req, res) => {
     runValidators: true,
   });
   if (!customer) {
-    return res
-      .status(404)
-      .json({ success: false, message: "customer NOT Found" });
+    throw customError("Customer NOT Found!", 404);
   }
 
   res
@@ -55,18 +52,12 @@ const updateCustomer = asyncMiddleware(async (req, res) => {
 });
 
 const deleteCustomer = asyncMiddleware(async (req, res) => {
-  try {
-    const customer = await Customer.findByIdAndDelete(req.params.id);
-    if (!customer) {
-      return res
-        .status(404)
-        .json({ success: false, message: "customer NOT Found" });
-    }
-
-    res.status(204);
-  } catch (error) {
-    res.status(400).json({ success: false, message: `Bad Request : ${error}` });
+  const customer = await Customer.findByIdAndDelete(req.params.id);
+  if (!customer) {
+    throw customError("Customer NOT Found!", 404);
   }
+
+  res.status(204);
 });
 
 export {
