@@ -5,9 +5,7 @@ import { customError } from "../errors/api-error.js";
 const getCustomers = asyncMiddleware(async (req, res) => {
   const customers = await Customer.find({});
   if (!customers || customers.length === 0) {
-    return res
-      .status(404)
-      .json({ success: false, message: "No customer found" });
+    throw customError("No customer found!", 404);
   }
   res.status(200).json({
     success: true,
