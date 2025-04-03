@@ -30,9 +30,11 @@ const errorMiddleware = (err, req, res, next) => {
 
     // mongoose validation error
     if (err.name === "ValidationError") {
-      const message = Object.values(err.errors).map((value) => value.message);
-      error = new Error(message.join(", "));
-      error.statusCode = 400;
+      if (err.errors) {
+        const message = Object.values(err.errors).map((value) => value.message);
+        error = new Error(message.join(", "));
+        error.statusCode = 400;
+      }
     }
 
     res
