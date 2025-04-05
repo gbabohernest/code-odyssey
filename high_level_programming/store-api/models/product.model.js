@@ -1,23 +1,23 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'product name is required'],
+      required: [true, "product name is required"],
       trim: true,
     },
     price: {
       type: Number,
-      required: [true, 'product price is required'],
+      required: [true, "product price is required"],
     },
 
     currency: {
       type: String,
-      default: 'UGX',
+      default: "UGX",
       enum: {
-        values: ['UGX', 'USD', 'LRD'],
-        message: '{VALUES} is not a valid currency',
+        values: ["UGX", "USD", "LRD"],
+        message: "{VALUES} is not a valid currency",
       },
     },
 
@@ -34,14 +34,14 @@ const productSchema = new mongoose.Schema(
     company: {
       type: String,
       enum: {
-        values: ['ikea', 'liddy', 'caressa', 'marcos'],
-        message: '{VALUES} is not supported',
+        values: ["ikea", "liddy", "caressa", "marcos"],
+        message: "{VALUES} is not supported",
       },
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-const Product = mongoose.Model('Product', productSchema);
+const Product = mongoose.model("Product", productSchema);
 
 module.exports = Product;
