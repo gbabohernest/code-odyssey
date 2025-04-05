@@ -3,7 +3,7 @@ const Product = require("../models/product.model");
 const asyncWrapper = require("../middlewares/async-wrapper.middleware");
 
 const getProducts = asyncWrapper(async (req, res) => {
-  const { featured, company, name, sort, field } = req.query;
+  const { featured, company, name, sort, field, numericFilters } = req.query;
   const queryObject = {};
 
   if (featured) {
@@ -18,7 +18,41 @@ const getProducts = asyncWrapper(async (req, res) => {
     queryObject.name = { $regex: name, $options: "i" };
   }
 
-  console.log(queryObject);
+  if (numericFilters) {
+    //map user's friendly operators with mongodb operators
+    const operatorsMap = {
+      ">": "$gt",
+      "<": "$lt",
+      "=": "$eq",
+      ">=": "$gte",
+      "<=": "$lte",
+    };
+
+    const regex = /\b(<|>|=|>=|<=)\b/g;
+
+    let filters = numericFilters.replace(
+      regex,
+      (match) => `-${operatorsMap[match]}-`,
+    );
+
+    // numeric fields in our model
+    const options = ["price", "rating"];
+
+    const filteredArray = filters.split(",");
+
+    filteredArray.forEach((item) => {
+      const [field, operator, value] = item.split("-");
+
+      if (options.includes(field)) {
+        queryObject[field] = { [operator]: Number(value) };
+      }
+    });
+
+    // console.log(filters);
+    // console.log(numericFilters);
+  }
+
+  // console.log(queryObject);
 
   let query = Product.find(queryObject);
 
@@ -37,7 +71,7 @@ const getProducts = asyncWrapper(async (req, res) => {
   }
 
   // pagination with skip and limit
-  const page = Number(req.body.page) || 1;
+  const page = Number(req.query.page) || 1;
   const limit = Number(req.query.limit) || 10;
   const skip = Number(page - 1) * limit;
 
