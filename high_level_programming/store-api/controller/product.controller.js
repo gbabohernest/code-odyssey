@@ -36,6 +36,13 @@ const getProducts = asyncWrapper(async (req, res) => {
     query = query.select({ name: 1, price: 1, currency: 1, rating: 1 });
   }
 
+  // pagination with skip and limit
+  const page = Number(req.body.page) || 1;
+  const limit = Number(req.query.limit) || 10;
+  const skip = Number(page - 1) * limit;
+
+  query = query.skip(skip).limit(limit);
+
   const products = await query;
 
   res
