@@ -6,7 +6,6 @@ const databaseConnection = require("./database/dbconnection");
 
 const app = express();
 
-//middleware
 app.use("/api/v1/products", productRouter);
 
 app.use(customErrorMiddleware);
@@ -17,7 +16,7 @@ app.get("/", (req, res) => {
 
 const startServer = async () => {
   try {
-    // connect to db
+    
     await databaseConnection();
 
     const server = app.listen(process.env.PORT, "127.0.0.1", (error) => {
