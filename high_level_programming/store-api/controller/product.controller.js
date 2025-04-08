@@ -49,8 +49,6 @@ const getProducts = asyncWrapper(async (req, res) => {
     });
   }
 
-  // console.log(queryObject);
-
   let query = Product.find(queryObject);
 
   if (sort) {
