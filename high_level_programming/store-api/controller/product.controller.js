@@ -1,13 +1,13 @@
-const Product = require("../models/product.model");
+const Product = require('../models/product.model');
 
-const asyncWrapper = require("../middlewares/async-wrapper.middleware");
+const asyncWrapper = require('../middlewares/async-wrapper.middleware');
 
 const getProducts = asyncWrapper(async (req, res) => {
   const { featured, company, name, sort, field, numericFilters } = req.query;
   const queryObject = {};
 
   if (featured) {
-    queryObject.featured = featured === "true";
+    queryObject.featured = featured === 'true';
   }
 
   if (company) {
@@ -15,41 +15,38 @@ const getProducts = asyncWrapper(async (req, res) => {
   }
 
   if (name) {
-    queryObject.name = { $regex: name, $options: "i" };
+    queryObject.name = { $regex: name, $options: 'i' };
   }
 
   if (numericFilters) {
     //map user's friendly operators with mongodb operators
     const operatorsMap = {
-      ">": "$gt",
-      "<": "$lt",
-      "=": "$eq",
-      ">=": "$gte",
-      "<=": "$lte",
+      '>': '$gt',
+      '<': '$lt',
+      '=': '$eq',
+      '>=': '$gte',
+      '<=': '$lte',
     };
 
     const regex = /\b(<|>|=|>=|<=)\b/g;
 
     let filters = numericFilters.replace(
       regex,
-      (match) => `-${operatorsMap[match]}-`,
+      (match) => `-${operatorsMap[match]}-`
     );
 
     // numeric fields in our model
-    const options = ["price", "rating"];
+    const options = ['price', 'rating'];
 
-    const filteredArray = filters.split(",");
+    const filteredArray = filters.split(',');
 
     filteredArray.forEach((item) => {
-      const [field, operator, value] = item.split("-");
+      const [field, operator, value] = item.split('-');
 
       if (options.includes(field)) {
         queryObject[field] = { [operator]: Number(value) };
       }
     });
-
-    // console.log(filters);
-    // console.log(numericFilters);
   }
 
   // console.log(queryObject);
@@ -57,14 +54,14 @@ const getProducts = asyncWrapper(async (req, res) => {
   let query = Product.find(queryObject);
 
   if (sort) {
-    const sortList = sort.split(",").join(" ");
+    const sortList = sort.split(',').join(' ');
     query = query.sort(sortList);
   } else {
     query.sort({ name: 1 });
   }
 
   if (field) {
-    const filedList = field.split(",").join("");
+    const filedList = field.split(',').join('');
     query = query.select(filedList);
   } else {
     query = query.select({ name: 1, price: 1, currency: 1, rating: 1 });
