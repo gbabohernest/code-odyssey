@@ -19,4 +19,5 @@ const asyncWrapper = (requestHandlerFn) => {
   };
 };
 
+// no longer in use, but still here for reference.. express-async-errors package is being used to catch the errors
 export { asyncWrapper };
