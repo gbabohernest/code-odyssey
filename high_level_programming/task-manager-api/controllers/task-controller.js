@@ -1,21 +1,21 @@
 import Task from "../models/tasks-model.js";
-import { asyncWrapper } from "../middlewares/async-middleware.js";
+// import { asyncWrapper } from "../middlewares/async-middleware.js";
 
-const getAllTask = asyncWrapper(async (req, res) => {
+const getAllTask = async (req, res) => {
   const tasks = await Task.find({});
   res.status(200).json({ success: true, data: tasks });
-});
+};
 
-const createTask = asyncWrapper(async (req, res) => {
+const createTask = async (req, res) => {
   const task = await Task.create(req.body);
   res.status(201).json({
     success: true,
     message: "task created successfully",
     data: task,
   });
-});
+};
 
-const getSingleTask = asyncWrapper(async (req, res) => {
+const getSingleTask = async (req, res) => {
   const { id: taskID } = req.params;
   const task = await Task.findOne({ _id: taskID });
   if (!task) {
@@ -24,9 +24,9 @@ const getSingleTask = asyncWrapper(async (req, res) => {
     throw error;
   }
   res.status(200).json({ success: true, data: task });
-});
+};
 
-const updateTask = asyncWrapper(async (req, res) => {
+const updateTask = async (req, res) => {
   const { id: taskID } = req.params;
   const task = await Task.findOneAndUpdate({ _id: taskID }, req.body, {
     new: true,
@@ -41,9 +41,9 @@ const updateTask = asyncWrapper(async (req, res) => {
   res
     .status(200)
     .json({ success: true, message: "update success", data: task });
-});
+};
 
-const deleteTask = asyncWrapper(async (req, res) => {
+const deleteTask = async (req, res) => {
   const { id: taskID } = req.params;
   const task = await Task.findOneAndDelete({ _id: taskID });
 
@@ -53,6 +53,6 @@ const deleteTask = asyncWrapper(async (req, res) => {
     throw error;
   }
   res.status(204).end();
-});
+};
 
 export { createTask, getAllTask, getSingleTask, updateTask, deleteTask };
