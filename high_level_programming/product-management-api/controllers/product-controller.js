@@ -2,7 +2,7 @@ import Product from "../models/product-model.js";
 import { asyncMiddleware } from "../middlewares/async-wrapper.middleware.js";
 import { customError } from "../errors/api-error.js";
 
-const getProducts = asyncMiddleware(async (req, res) => {
+const getProducts = async (req, res) => {
   const products = await Product.find({});
   if (!products || products.length === 0) {
     throw customError("Product Not Found!", 404);
@@ -12,17 +12,17 @@ const getProducts = asyncMiddleware(async (req, res) => {
     message: "all product(s) retrieved",
     data: products,
   });
-});
+};
 
-const createProduct = asyncMiddleware(async (req, res) => {
+const createProduct = async (req, res) => {
   const payload = req.body;
   const product = await Product.create({ ...payload });
   res
     .status(201)
     .json({ success: true, message: "product created", data: product });
-});
+};
 
-const getProduct = asyncMiddleware(async (req, res) => {
+const getProduct = async (req, res) => {
   const { id: productID } = req.params;
   const product = await Product.findById(productID);
   if (!product) {
@@ -30,9 +30,9 @@ const getProduct = asyncMiddleware(async (req, res) => {
   }
 
   res.status(200).json({ success: true, data: product });
-});
+};
 
-const updateProduct = asyncMiddleware(async (req, res) => {
+const updateProduct = async (req, res) => {
   const { id: productID } = req.params;
   const product = await Product.findByIdAndUpdate(productID, req.body, {
     new: true,
@@ -46,15 +46,16 @@ const updateProduct = asyncMiddleware(async (req, res) => {
   res
     .status(200)
     .json({ success: true, message: "update success", data: product });
-});
+};
 
-const deleteProduct = asyncMiddleware(async (req, res) => {
+const deleteProduct = async (req, res) => {
   const product = await Product.findByIdAndDelete(req.params.id);
   if (!product) {
     throw customError("Product Not Found!", 404);
   }
 
-  res.status(204);
-});
+  // res.status(204);
+  res.status(200).json({ success: true, message: "product deleted" });
+};
 
 export { getProducts, createProduct, getProduct, updateProduct, deleteProduct };
