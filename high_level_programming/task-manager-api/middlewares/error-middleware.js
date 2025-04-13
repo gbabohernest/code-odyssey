@@ -1,3 +1,5 @@
+import { StatusCodes, getReasonPhrase } from 'http-status-codes';
+
 /**
  *  Custom error middleware
  * @param err
@@ -5,28 +7,31 @@
  * @param res
  * @param next
  */
+
+const { BAD_REQUEST, INTERNAL_SERVER_ERROR } = StatusCodes;
+
 const errorMiddleware = (err, req, res, next) => {
-  let statusCode = err.statusCode || 500;
-  let message = err.message || "Internal Server Error";
+  let statusCode = err.statusCode || INTERNAL_SERVER_ERROR;
+  let message = err.message || getReasonPhrase(INTERNAL_SERVER_ERROR);
 
   //mongoose bad ObjectID
-  if (err.name === "CastError") {
-    message = "Bad Request, Invalid ID format";
-    statusCode = 400;
+  if (err.name === 'CastError') {
+    message = 'Bad Request, Invalid ID format';
+    statusCode = BAD_REQUEST;
   }
 
   //mongoose duplicate key
   if (err.code === 11000) {
-    message = "Duplicate field value entered. Duplicate key error ";
-    statusCode = 400;
+    message = 'Duplicate field value entered. Duplicate key error ';
+    statusCode = BAD_REQUEST;
   }
 
   // mongoose validation error
-  if (err.name === "ValidationError") {
+  if (err.name === 'ValidationError') {
     if (err.errors) {
       const messages = Object.values(err.errors).map((value) => value.message);
-      message = messages.join(", ");
-      statusCode = 400;
+      message = messages.join(', ');
+      statusCode = BAD_REQUEST;
     }
   }
 
