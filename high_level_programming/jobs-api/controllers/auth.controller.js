@@ -24,7 +24,7 @@ const signup = async (req, res, next) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
-    const user = await User.create([{ name, email, password: password }], {
+    const user = await User.create([{ name, email, password: hashPassword }], {
       session,
     });
 
