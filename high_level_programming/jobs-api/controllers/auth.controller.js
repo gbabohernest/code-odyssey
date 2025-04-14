@@ -13,7 +13,7 @@ const signup = async (req, res, next) => {
     const { name, email, password } = req.body;
 
     // check if email exists
-    const existingUser = User.findOne({ email })
+    const existingUser = await User.findOne({ email })
       .select({ email: 1 })
       .session(session);
     if (existingUser) {
