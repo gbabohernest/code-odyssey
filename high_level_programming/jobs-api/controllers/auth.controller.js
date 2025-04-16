@@ -2,8 +2,6 @@ import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";
 import User from "../models/user.model.js";
 import { CustomAPIError } from "../utils/index.js";
-import jwt from "jsonwebtoken";
-import { JWT_EXPIRES_IN, JWT_SECRET } from "../config/env.js";
 
 const signup = async (req, res, next) => {
   const session = await mongoose.startSession();
@@ -15,6 +13,7 @@ const signup = async (req, res, next) => {
     const existingUser = await User.findOne({ email })
       .select({ email: 1 })
       .session(session);
+
     if (existingUser) {
       throw new CustomAPIError("User already exists", StatusCodes.CONFLICT);
     }
@@ -23,18 +22,15 @@ const signup = async (req, res, next) => {
       session,
     });
 
-    const token = await jwt.sign(
-      { userID: user[0]._id, name: user[0].name },
-      JWT_SECRET,
-      {
-        expiresIn: JWT_EXPIRES_IN,
-      },
-    );
+    const token = user[0].createJWT();
     await session.commitTransaction();
 
-    res
-      .status(StatusCodes.CREATED)
-      .json({ success: true, message: "user created", data: { token, user } });
+    res.status(StatusCodes.CREATED).json({
+      success: true,
+      message: "user created",
+      user: user[0].name,
+      token,
+    });
   } catch (error) {
     await session.abortTransaction();
     next(error);
