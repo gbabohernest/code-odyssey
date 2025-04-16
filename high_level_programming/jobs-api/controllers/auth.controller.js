@@ -2,7 +2,6 @@ import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";
 import User from "../models/user.model.js";
 import { CustomAPIError } from "../utils/index.js";
-import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { JWT_EXPIRES_IN, JWT_SECRET } from "../config/env.js";
 
@@ -20,16 +19,12 @@ const signup = async (req, res, next) => {
       throw new CustomAPIError("User already exists", StatusCodes.CONFLICT);
     }
 
-    // hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(password, salt);
-
-    const user = await User.create([{ name, email, password: hashPassword }], {
+    const user = await User.create([{ name, email, password }], {
       session,
     });
 
     const token = await jwt.sign(
-      { name, email, password: password },
+      { userID: user[0]._id, name: user[0].name },
       JWT_SECRET,
       {
         expiresIn: JWT_EXPIRES_IN,
@@ -39,7 +34,7 @@ const signup = async (req, res, next) => {
 
     res
       .status(StatusCodes.CREATED)
-      .json({ success: true, message: "user created" });
+      .json({ success: true, message: "user created", data: { token, user } });
   } catch (error) {
     await session.abortTransaction();
     next(error);
