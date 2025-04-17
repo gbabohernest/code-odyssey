@@ -47,6 +47,11 @@ userSchema.methods.createJWT = function () {
     expiresIn: JWT_EXPIRES_IN,
   });
 };
+
+//instance method to compare & verify user hashed password with provided password
+userSchema.methods.compareAndVerifyPassword = async function (pwd) {
+  return await bcrypt.compare(pwd, this.password);
+};
 const User = mongoose.model("User", userSchema);
 
 export default User;
