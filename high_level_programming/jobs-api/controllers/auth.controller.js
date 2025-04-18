@@ -1,11 +1,11 @@
-import { StatusCodes } from 'http-status-codes';
-import mongoose from 'mongoose';
-import User from '../models/user.model.js';
+import { StatusCodes } from "http-status-codes";
+import mongoose from "mongoose";
+import User from "../models/user.model.js";
 import {
   BadRequestError,
   CustomAPIError,
   UnauthenticatedError,
-} from '../utils/index.js';
+} from "../utils/index.js";
 
 const signup = async (req, res, next) => {
   const session = await mongoose.startSession();
@@ -17,7 +17,7 @@ const signup = async (req, res, next) => {
     const existingUser = await User.findOne({ email }, { email: 1 }, null);
 
     if (existingUser) {
-      throw new CustomAPIError('User already exists', StatusCodes.CONFLICT);
+      throw new CustomAPIError("User already exists", StatusCodes.CONFLICT);
     }
 
     const user = await User.create([{ name, email, password }], {
@@ -29,7 +29,7 @@ const signup = async (req, res, next) => {
 
     res.status(StatusCodes.CREATED).json({
       success: true,
-      message: 'user created',
+      message: "user created",
       user: user[0].name,
       token,
     });
@@ -45,26 +45,30 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    throw new BadRequestError('Email and Password are required');
+    throw new BadRequestError("Email and Password are required");
   }
 
   const user = await User.findOne(
     { email },
     { email: 1, name: 1, password: 1 },
-    null
+    null,
   );
 
-  if (!user) throw new UnauthenticatedError('Invalid Email ID');
+  if (!user) {
+    throw new UnauthenticatedError("Invalid Email ID");
+  }
 
   const isPasswordValid = await user.compareAndVerifyPassword(password);
 
-  if (!isPasswordValid) throw new UnauthenticatedError('Invalid Password');
+  if (!isPasswordValid) {
+    throw new UnauthenticatedError("Invalid Password");
+  }
 
   const token = await user.createJWT();
 
   res
     .status(StatusCodes.OK)
-    .json({ success: true, message: 'login success', user: user.name, token });
+    .json({ success: true, message: "login success", user: user.name, token });
 };
 
 export { signup, login };

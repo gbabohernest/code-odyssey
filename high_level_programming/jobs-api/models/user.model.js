@@ -39,10 +39,11 @@ const userSchema = new mongoose.Schema(
 userSchema.pre("save", async function (next) {
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
+  next();
 });
 
 //instance method to generate user's token
-userSchema.methods.createJWT = function () {
+userSchema.methods.createJWT = async function () {
   return jwt.sign({ userID: this._id, name: this.name }, JWT_SECRET, {
     expiresIn: JWT_EXPIRES_IN,
   });
