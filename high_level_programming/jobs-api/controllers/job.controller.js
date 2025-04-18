@@ -1,13 +1,36 @@
 import { StatusCodes } from "http-status-codes";
+import mongoose from "mongoose";
+import { UnauthenticatedError } from "../utils/index.js";
+import Job from "../models/job.model.js";
 
 const getJobs = async (req, res) => {
   res.status(StatusCodes.OK).json({ success: true, message: "Get all jobs" });
 };
 
-const createJob = async (req, res) => {
-  res
-    .status(StatusCodes.CREATED)
-    .json({ success: true, message: "job created" });
+const createJob = async (req, res, next) => {
+  const session = await mongoose.startSession();
+
+  try {
+    await session.startTransaction();
+    const { company, position } = req.body;
+
+    const job = await Job.create(
+      [{ company, position, createdBy: req.user.userID }],
+      { session },
+    );
+
+    await session.commitTransaction();
+
+    res
+      .status(StatusCodes.CREATED)
+      .json({ success: true, message: "Job created successfully" });
+  } catch (error) {
+    await session.abortTransaction();
+
+    next(error);
+  } finally {
+    await session.endSession();
+  }
 };
 const getJob = async (req, res) => {
   res
