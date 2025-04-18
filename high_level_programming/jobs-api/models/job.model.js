@@ -34,4 +34,12 @@ const jobSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
+jobSchema.pre("save", function (next) {
+  this.company = this.company.toUpperCase();
+  this.position = this.position.toUpperCase();
+  next();
+});
+
 const Job = mongoose.model("Job", jobSchema);
+
+export default Job;
