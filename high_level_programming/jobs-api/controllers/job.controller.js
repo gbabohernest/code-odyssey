@@ -4,7 +4,19 @@ import { UnauthenticatedError } from "../utils/index.js";
 import Job from "../models/job.model.js";
 
 const getJobs = async (req, res) => {
-  res.status(StatusCodes.OK).json({ success: true, message: "Get all jobs" });
+  // Retrieve all job(s) for a given user
+  const { userID } = req.user;
+  const jobs = await Job.find(
+    { createdBy: userID },
+    { company: 1, position: 1, createdBy: 1 },
+    null,
+  ).sort({ createdAt: -1 });
+  res.status(StatusCodes.OK).json({
+    success: true,
+    message: "Get all jobs",
+    nbHits: jobs.length,
+    jobs,
+  });
 };
 
 const createJob = async (req, res, next) => {
