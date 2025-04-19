@@ -13,13 +13,11 @@ const getJobs = async (req, res) => {
   ).sort({ createdAt: -1 });
 
   if (jobs.length < 1) {
-    return res
-      .status(StatusCodes.OK)
-      .json({
-        success: true,
-        message: "No job found for this user, start creating job(s)",
-        jobs,
-      });
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: "No job found for this user, start creating job(s)",
+      jobs,
+    });
   }
   res.status(StatusCodes.OK).json({
     success: true,
@@ -72,8 +70,43 @@ const getJob = async (req, res) => {
     .json({ success: true, message: "Get a single job", job });
 };
 
-const updateJob = async (req, res) => {
-  res.status(StatusCodes.OK).json({ success: false, message: "update job" });
+const updateJob = async (req, res, next) => {
+  const session = await mongoose.startSession();
+  try {
+    await session.startTransaction();
+
+    const { id: jobID } = req.params;
+    const { userID } = req.user;
+
+    const job = await Job.findOne({ _id: jobID, createdBy: userID }, "", null);
+
+    if (!job) {
+      return next(
+        new CustomAPIError("No Job found to update", StatusCodes.NOT_FOUND),
+      );
+    }
+
+    Object.assign(job, req.body);
+    await job.save({ session, validateBeforeSave: true, timestamp: false });
+
+    await session.commitTransaction();
+
+    const { company, position, status } = job;
+    res
+      .status(StatusCodes.OK)
+      .json({
+        success: true,
+        message: "update success",
+        company,
+        position,
+        status,
+      });
+  } catch (error) {
+    await session.abortTransaction();
+    next(error);
+  } finally {
+    await session.endSession();
+  }
 };
 
 const deleteJob = async (req, res) => {
