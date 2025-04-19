@@ -11,6 +11,16 @@ const getJobs = async (req, res) => {
     { company: 1, position: 1, createdBy: 1 },
     null,
   ).sort({ createdAt: -1 });
+
+  if (jobs.length < 1) {
+    return res
+      .status(StatusCodes.OK)
+      .json({
+        success: true,
+        message: "No job found for this user, start creating job(s)",
+        jobs,
+      });
+  }
   res.status(StatusCodes.OK).json({
     success: true,
     message: "Get all jobs",
