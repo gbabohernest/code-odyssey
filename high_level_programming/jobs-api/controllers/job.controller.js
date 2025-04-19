@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";
-import { UnauthenticatedError } from "../utils/index.js";
+import { CustomAPIError, UnauthenticatedError } from "../utils/index.js";
 import Job from "../models/job.model.js";
 
 const getJobs = async (req, res) => {
@@ -45,9 +45,21 @@ const createJob = async (req, res, next) => {
   }
 };
 const getJob = async (req, res) => {
+  const { id: jobID } = req.params;
+
+  const job = await Job.findOne(
+    { _id: jobID, createdBy: req.user.userID },
+    { company: 1, position: 1 },
+    null,
+  );
+
+  if (!job) {
+    throw new CustomAPIError("No Job found with ID", StatusCodes.NOT_FOUND);
+  }
+
   res
     .status(StatusCodes.OK)
-    .json({ success: true, message: "Get a single job" });
+    .json({ success: true, message: "Get a single job", job });
 };
 
 const updateJob = async (req, res) => {
