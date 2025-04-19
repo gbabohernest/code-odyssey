@@ -22,7 +22,7 @@ const authMiddleware = async (req, res, next) => {
 
     next();
   } catch (error) {
-    throw new UnauthenticatedError(error.message);
+    next(new UnauthenticatedError(error.message));
   }
 };
 
