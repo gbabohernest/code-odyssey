@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import mongoose from "mongoose";
-import { CustomAPIError, UnauthenticatedError } from "../utils/index.js";
+import { CustomAPIError, withTransaction } from "../utils/index.js";
 import Job from "../models/job.model.js";
 
 const getJobs = async (req, res) => {
@@ -92,15 +92,13 @@ const updateJob = async (req, res, next) => {
     await session.commitTransaction();
 
     const { company, position, status } = job;
-    res
-      .status(StatusCodes.OK)
-      .json({
-        success: true,
-        message: "update success",
-        company,
-        position,
-        status,
-      });
+    res.status(StatusCodes.OK).json({
+      success: true,
+      message: "update success",
+      company,
+      position,
+      status,
+    });
   } catch (error) {
     await session.abortTransaction();
     next(error);
@@ -109,8 +107,24 @@ const updateJob = async (req, res, next) => {
   }
 };
 
-const deleteJob = async (req, res) => {
-  res.status(StatusCodes.NO_CONTENT).end();
+const deleteJob = async (req, res, next) => {
+  await withTransaction(async (session) => {
+    const { id: jobID } = req.params;
+    const { userID } = req.user;
+
+    const job = await Job.findOneAndDelete(
+      { _id: jobID, createdBy: userID },
+      { company: 1, position: 1 },
+    ).session(session);
+
+    if (!job) {
+      return next(
+        new CustomAPIError("No Job Found to delete", StatusCodes.NOT_FOUND),
+      );
+    }
+    // console.log(job);
+    return res.status(StatusCodes.NO_CONTENT).end();
+  }, next);
 };
 
 export { getJobs, createJob, getJob, updateJob, deleteJob };
