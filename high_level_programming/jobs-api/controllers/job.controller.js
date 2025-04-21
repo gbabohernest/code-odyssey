@@ -52,6 +52,7 @@ const createJob = async (req, res, next) => {
     await session.endSession();
   }
 };
+
 const getJob = async (req, res) => {
   const { id: jobID } = req.params;
 
@@ -71,10 +72,7 @@ const getJob = async (req, res) => {
 };
 
 const updateJob = async (req, res, next) => {
-  const session = await mongoose.startSession();
-  try {
-    await session.startTransaction();
-
+  await withTransaction(async (session) => {
     const { id: jobID } = req.params;
     const { userID } = req.user;
 
@@ -89,22 +87,15 @@ const updateJob = async (req, res, next) => {
     Object.assign(job, req.body);
     await job.save({ session, validateBeforeSave: true, timestamp: false });
 
-    await session.commitTransaction();
-
     const { company, position, status } = job;
-    res.status(StatusCodes.OK).json({
+    return res.status(StatusCodes.OK).json({
       success: true,
       message: "update success",
       company,
       position,
       status,
     });
-  } catch (error) {
-    await session.abortTransaction();
-    next(error);
-  } finally {
-    await session.endSession();
-  }
+  }, next);
 };
 
 const deleteJob = async (req, res, next) => {
