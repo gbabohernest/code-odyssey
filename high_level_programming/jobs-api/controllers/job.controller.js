@@ -28,10 +28,7 @@ const getJobs = async (req, res) => {
 };
 
 const createJob = async (req, res, next) => {
-  const session = await mongoose.startSession();
-
-  try {
-    await session.startTransaction();
+  await withTransaction(async (session) => {
     const { company, position } = req.body;
 
     const job = await Job.create(
@@ -43,14 +40,8 @@ const createJob = async (req, res, next) => {
 
     res
       .status(StatusCodes.CREATED)
-      .json({ success: true, message: "Job created successfully" });
-  } catch (error) {
-    await session.abortTransaction();
-
-    next(error);
-  } finally {
-    await session.endSession();
-  }
+      .json({ success: true, message: "Job created successfully", job });
+  }, next);
 };
 
 const getJob = async (req, res) => {
