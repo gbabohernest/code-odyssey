@@ -1,23 +1,23 @@
 import { StatusCodes } from "http-status-codes";
-import mongoose from "mongoose";
 import User from "../models/user.model.js";
 import {
   BadRequestError,
   CustomAPIError,
   UnauthenticatedError,
+  withTransaction,
 } from "../utils/index.js";
 
 const signup = async (req, res, next) => {
-  const session = await mongoose.startSession();
-  try {
-    await session.startTransaction();
+  await withTransaction(async (session) => {
     const { name, email, password } = req.body;
 
     // check if email exists
     const existingUser = await User.findOne({ email }, { email: 1 }, null);
 
     if (existingUser) {
-      throw new CustomAPIError("User already exists", StatusCodes.CONFLICT);
+      return next(
+        throw new CustomAPIError("User already exists", StatusCodes.CONFLICT),
+      );
     }
 
     const user = await User.create([{ name, email, password }], {
@@ -25,20 +25,14 @@ const signup = async (req, res, next) => {
     });
 
     const token = await user[0].createJWT();
-    await session.commitTransaction();
 
-    res.status(StatusCodes.CREATED).json({
+    return res.status(StatusCodes.CREATED).json({
       success: true,
       message: "user created",
       user: user[0].name,
       token,
     });
-  } catch (error) {
-    await session.abortTransaction();
-    next(error);
-  } finally {
-    await session.endSession();
-  }
+  }, next);
 };
 
 const login = async (req, res) => {
