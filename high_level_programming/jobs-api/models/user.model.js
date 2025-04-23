@@ -42,7 +42,11 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-//instance method to generate user's token
+/**
+ *  Instance method; Generates user's token
+ * @returns {Promise<*>}
+ */
+
 userSchema.methods.createJWT = async function () {
   return jwt.sign({ userID: this._id, name: this.name }, JWT_SECRET, {
     expiresIn: JWT_EXPIRES_IN,
