@@ -49,7 +49,11 @@ userSchema.methods.createJWT = async function () {
   });
 };
 
-//instance method to compare & verify user hashed password with provided password
+/**
+ * Instance method to compare & verify user's hashed password with provided password
+ * @param pwd - User's Password
+ */
+
 userSchema.methods.compareAndVerifyPassword = async function (pwd) {
   return await bcrypt.compare(pwd, this.password);
 };
