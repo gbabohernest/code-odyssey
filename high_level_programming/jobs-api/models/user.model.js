@@ -35,7 +35,10 @@ const userSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-// before we create a user document, hash the user password
+/**
+ * Pre save hooks that hashes the user password a user is created in database
+ */
+
 userSchema.pre("save", async function (next) {
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
