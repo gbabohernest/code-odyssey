@@ -34,6 +34,13 @@ const getJobs = async (req, res) => {
   });
 };
 
+/**
+ * Create Job for an authenticated job
+ * @param req - Request object
+ * @param res - Response object
+ * @param next
+ * @returns {Promise<void>}
+ */
 const createJob = async (req, res, next) => {
   await withTransaction(async (session) => {
     const { company, position } = req.body;
