@@ -82,6 +82,13 @@ const getJob = async (req, res) => {
     .json({ success: true, message: "Get a single job", job });
 };
 
+/**
+ * Update job for an authenticated user
+ * @param req - Request object
+ * @param res - Response object
+ * @param next - Next middleware in
+ * @returns {Promise<void>}
+ */
 const updateJob = async (req, res, next) => {
   await withTransaction(async (session) => {
     const { id: jobID } = req.params;
@@ -109,6 +116,13 @@ const updateJob = async (req, res, next) => {
   }, next);
 };
 
+/**
+ * Delete a job for an authenticated user
+ * @param req - Request object
+ * @param res - Response object
+ * @param next - Next middleware in
+ * @returns {Promise<void>}
+ */
 const deleteJob = async (req, res, next) => {
   await withTransaction(async (session) => {
     const { id: jobID } = req.params;
