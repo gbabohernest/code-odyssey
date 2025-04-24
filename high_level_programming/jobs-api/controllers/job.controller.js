@@ -3,6 +3,13 @@ import mongoose from "mongoose";
 import { CustomAPIError, withTransaction } from "../utils/index.js";
 import Job from "../models/job.model.js";
 
+/**
+ * Get all Jobs for an Authenticated User.
+ * @param req - Request object
+ * @param res - Response object
+ * @returns {Promise<*>}
+ */
+
 const getJobs = async (req, res) => {
   // Retrieve all job(s) for a given user
   const { userID } = req.user;
