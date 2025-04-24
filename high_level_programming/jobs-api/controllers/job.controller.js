@@ -35,10 +35,10 @@ const getJobs = async (req, res) => {
 };
 
 /**
- * Create Job for an authenticated job
+ * Create Job for an authenticated user
  * @param req - Request object
  * @param res - Response object
- * @param next
+ * @param next - Next middleware in the chain
  * @returns {Promise<void>}
  */
 const createJob = async (req, res, next) => {
@@ -58,6 +58,12 @@ const createJob = async (req, res, next) => {
   }, next);
 };
 
+/**
+ * Get a single job for an authenticated user
+ * @param req - Request object
+ * @param res - Response object
+ * @returns {Promise<void>}
+ */
 const getJob = async (req, res) => {
   const { id: jobID } = req.params;
 
