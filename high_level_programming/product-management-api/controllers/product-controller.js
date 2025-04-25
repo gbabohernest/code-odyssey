@@ -5,7 +5,12 @@ import { customError } from "../errors/api-error.js";
 const getProducts = async (req, res) => {
   const products = await Product.find({});
   if (!products || products.length === 0) {
-    return res.status(200).json("No product(s) found, Start Adding product(s)");
+    return res
+      .status(200)
+      .json({
+        success: true,
+        message: "No product(s) found, Start Adding product(s)",
+      });
   }
   res.status(200).json({
     success: true,
