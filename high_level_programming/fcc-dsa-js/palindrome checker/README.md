@@ -12,4 +12,4 @@ Build an app that is functionally similar to [freeCodeCamp's version](https://pa
 
 ## Project Output
 
-[!](ss.png)
+![](ss.png)
