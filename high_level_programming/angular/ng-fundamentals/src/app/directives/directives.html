@@ -64,7 +64,7 @@
         <li *ngFor="let course of courses">{{ course }}</li>
       </ul>
 
-      <hr>
+      <!--      <hr>-->
     </div>
     <div class="col">
       <p> for block built-in control structure </p>
@@ -80,11 +80,69 @@
           }
 
         } @empty {
-          <li>No item to display</li>
+          No item(s) to display
         }
       </ul>
- <hr>
+      <!--      <hr>-->
     </div>
 
   </div>
+
+  <hr>
+  <div class="row">
+    <h6>{{ sectionTitle3 }}</h6>
+    <div class="col">
+      <p>*ngSwitch</p>
+
+      <div>
+        <button class="btn btn-success m-1" (click)="set(1)">1st class</button>
+        <button class="btn btn-primary m-1" (click)="set(2)">2nd class</button>
+        <button class="btn btn-warning m-1" (click)="set(3)">3rd class</button>
+      </div>
+
+      <div class="ng-switch-result mt-3" [ngSwitch]="classLevel" >
+        <p *ngSwitchCase="1">Congrats on achieving 1st class</p>
+        <p *ngSwitchCase="2">Congrats on achieving 2nd class</p>
+        <p *ngSwitchCase="3">Congrats on achieving 3rd class</p>
+        <p *ngSwitchDefault>No result found..</p>
+
+      </div>
+
+
+      <!--      <hr>-->
+    </div>
+    <div class="col">
+      <p> switch block built-in control structure </p>
+
+        <div>
+        <button class="btn btn-success m-1" (click)="set(1)">1st class</button>
+        <button class="btn btn-primary m-1" (click)="set(2)">2nd class</button>
+        <button class="btn btn-warning m-1" (click)="set(3)">3rd class</button>
+      </div>
+
+      <div class="mt-3">
+        @switch (classLevel) {
+          @case(1) {
+            <p>Congrats on achieving 1st class</p>
+          }
+          @case(2) {
+            <p>Congrats on achieving 2nd class</p>
+          }
+
+          @case(3) {
+            <p>Congrats on achieving 3rd class</p>
+          }
+          @default {
+            <p>No result yet...</p>
+          }
+        }
+      </div>
+
+
+      <!--      <hr>-->
+    </div>
+
+  </div>
+
+
 </div>

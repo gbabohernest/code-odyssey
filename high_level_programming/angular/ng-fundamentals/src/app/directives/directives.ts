@@ -9,9 +9,10 @@ import {FormsModule} from '@angular/forms';
   styleUrl: './directives.scss'
 })
 export class Directives {
-  title = 'structural directives'
+  title = 'structural directives and new built-in control flow statments'
   sectionTitle = '*ngIf vs @if block'
   sectionTitle2 = '*ngFor vs @for block'
+  sectionTitle3 = 'ngSwitch vs @switch block'
   isBtnToggle = false;
   showElement = false;
 
@@ -20,7 +21,7 @@ export class Directives {
 
   courses = ['Angular', 'Nest Js', 'Django', 'Laravel']
   courses2 = []
-
+  classLevel = 0;
 toggleBtn (): void {
     this.isBtnToggle = !this.isBtnToggle
     console.log(this.isBtnToggle)
@@ -34,6 +35,9 @@ hide() {
   this.showElement = false;
 }
 
+set(number: number) {
+    this.classLevel = number;
+}
 
 
 }
