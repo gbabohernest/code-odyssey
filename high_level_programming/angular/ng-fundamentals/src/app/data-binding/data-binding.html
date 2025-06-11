@@ -1,0 +1,45 @@
+<div class="container text-center">
+  <div class="row">
+    <h4 class="mb-2">{{ title }}</h4>
+    <div class="col">
+      <h6>{{ one_way_binding }}</h6>
+
+      <p>One way binding: data flows in one direction, either from component to view or from view to component:
+        interpolation, property binding, event binding
+      </p>
+      <div class="interpolation">
+        <p>1. interpolation: {{ interpolation }}</p>
+        <p>2. property binding: binds an html property to a field inside the component</p>
+      </div>
+      <div class="property_binding">
+        <input type="text" [value]="property_binding"> <br>
+        <img src="something" [alt]="property_binding">
+      </div>
+
+
+      <div class="event-binding mt-3">
+
+        <p>Event binding: {{ event_binding }}</p>
+          <button class="btn btn-primary" (click)="log()">click me</button>
+
+        <select name="tech stack" (change)="onChange()" id="">
+          <option value="tech stack">tech stack</option>
+          <option value="angular">angular</option>
+          <option value="nest js">nest js</option>
+          <option value="vue">vue</option>
+        </select>
+      </div>
+
+
+    </div>
+    <div class="col">
+      <h6>{{ two_ways_binding }}</h6>
+      <p>{{two_ways_data_binding}}</p>
+
+      <div>
+        <input type="text" [(ngModel)]="test_two_ways_binding">
+        {{test_two_ways_binding}}
+      </div>
+    </div>
+  </div>
+</div>
