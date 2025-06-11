@@ -1,0 +1,9 @@
+# Angular Journey 
+Welcome to my Angular learning journey!  This repo documents my progress as I learned modern Angular (v20) step by step,
+following a structured roadmap with hands-on mini-projects  notes.
+
+
+## 30-Day Roadmap
+A progressive plan to learn Angular fundamentals and intermediate features.
+- Day 1-2: Angular CLI & Project Setup
+- Day 3-5: Components & Data Binding
