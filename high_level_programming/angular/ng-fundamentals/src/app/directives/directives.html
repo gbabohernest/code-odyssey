@@ -1,0 +1,63 @@
+<div class="container text-center">
+  <p>{{ title }}</p>
+
+  <div class="row">
+    <h6>{{ sectionTitle }}</h6>
+    <div class="col">
+      <p>*ngif</p>
+      <div>
+        <input type="checkbox" (click)="toggleBtn()">Terms and conditions
+      </div>
+
+
+      <button type="submit" class="btn btn-secondary" *ngIf="isBtnToggle">Test *ngif</button>
+
+      <hr>
+      <button class="btn btn-success m-2" (click)="show()">show element</button>
+      <button class=" btn btn-danger" (click)="hide()"> hide element</button>
+
+      <div *ngIf="showElement">
+           <input type="text" placeholder="writ your name">
+      </div>
+
+      <hr>
+      <div>
+        <input type="text" class="m-1" [(ngModel)]="input1" >
+        <input type="text" [(ngModel)]="input2">
+
+       <p *ngIf="input1 === input2">
+          Both input values are equal
+       </p>
+
+      <p  *ngIf="input1 !== input2">Sorry, they are not equal</p>
+      </div>
+
+
+    </div>
+    <div class="col">
+      <p> if built-in control</p>
+
+       <div>
+        <input type="checkbox" (click)="toggleBtn()">Terms and conditions
+      </div>
+
+      @if(isBtnToggle) {
+        <button type="submit" class="btn btn-secondary">Test if block</button>
+      }
+
+      <hr>
+
+       <button class="btn btn-success m-2" (click)="show()">show element</button>
+      <button class=" btn btn-danger" (click)="hide()"> hide element</button>
+
+      @if (showElement) {
+        <input type="text" placeholder="writ your name">
+      }
+
+
+      <hr>
+    </div>
+
+  </div>
+</div>
+
