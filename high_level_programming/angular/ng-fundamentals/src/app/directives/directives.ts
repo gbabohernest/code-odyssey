@@ -10,14 +10,16 @@ import {FormsModule} from '@angular/forms';
 })
 export class Directives {
   title = 'structural directives'
-  sectionTitle = '*ngIf vs @if'
+  sectionTitle = '*ngIf vs @if block'
+  sectionTitle2 = '*ngFor vs @for block'
   isBtnToggle = false;
   showElement = false;
 
   input1 = '';
   input2 = ''
 
-
+  courses = ['Angular', 'Nest Js', 'Django', 'Laravel']
+  courses2 = []
 
 toggleBtn (): void {
     this.isBtnToggle = !this.isBtnToggle
@@ -31,5 +33,7 @@ show() {
 hide() {
   this.showElement = false;
 }
+
+
 
 }

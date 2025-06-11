@@ -17,47 +17,74 @@
       <button class=" btn btn-danger" (click)="hide()"> hide element</button>
 
       <div *ngIf="showElement">
-           <input type="text" placeholder="writ your name">
+        <input type="text" placeholder="writ your name">
       </div>
 
       <hr>
       <div>
-        <input type="text" class="m-1" [(ngModel)]="input1" >
+        <input type="text" class="m-1" [(ngModel)]="input1">
         <input type="text" [(ngModel)]="input2">
 
-       <p *ngIf="input1 === input2">
+        <p *ngIf="input1 === input2">
           Both input values are equal
-       </p>
+        </p>
 
-      <p  *ngIf="input1 !== input2">Sorry, they are not equal</p>
+        <p *ngIf="input1 !== input2">Sorry, they are not equal</p>
       </div>
-
-
     </div>
     <div class="col">
-      <p> if built-in control</p>
+      <p> built-in control if block </p>
 
-       <div>
+      <div>
         <input type="checkbox" (click)="toggleBtn()">Terms and conditions
       </div>
 
-      @if(isBtnToggle) {
+      @if (isBtnToggle) {
         <button type="submit" class="btn btn-secondary">Test if block</button>
       }
 
       <hr>
 
-       <button class="btn btn-success m-2" (click)="show()">show element</button>
+      <button class="btn btn-success m-2" (click)="show()">show element</button>
       <button class=" btn btn-danger" (click)="hide()"> hide element</button>
 
       @if (showElement) {
         <input type="text" placeholder="writ your name">
       }
 
+    </div>
+
+  </div>
+  <hr>
+  <div class="row">
+    <h6>{{ sectionTitle2 }}</h6>
+    <div class="col">
+      <p>*ngFor</p>
+      <ul class="ngfor">
+        <li *ngFor="let course of courses">{{ course }}</li>
+      </ul>
 
       <hr>
+    </div>
+    <div class="col">
+      <p> for block built-in control structure </p>
+      <ul class="for-block">
+        @for (item of courses; track item; let idx = $index, count = $count, e = $even, last = $last) {
+
+          @if (e) {
+            <li class="text-success">{{ item }}</li>
+          } @else if (last) {
+            <li class="text-danger">{{ item }}</li>
+          } @else {
+            <li>{{ item }}</li>
+          }
+
+        } @empty {
+          <li>No item to display</li>
+        }
+      </ul>
+ <hr>
     </div>
 
   </div>
 </div>
-
