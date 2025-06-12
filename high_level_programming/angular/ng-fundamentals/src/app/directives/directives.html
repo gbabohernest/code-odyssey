@@ -109,7 +109,6 @@
       </div>
 
 
-      <!--      <hr>-->
     </div>
     <div class="col">
       <p> switch block built-in control structure </p>
@@ -138,11 +137,55 @@
         }
       </div>
 
-
-      <!--      <hr>-->
     </div>
 
   </div>
 
+<!--  attribute directives-->
+   <hr>
+
+  <div class="row">
+    <h6>{{ sectionTitle4 }}</h6>
+    <div class="col">
+      <p>ngClass - add or remove css classes </p>
+      <h4 [ngClass]="textColor">Ng class - attribute directive</h4>
+
+      <div>
+        <button class="btn btn-outline-danger m-4" (click)="changeTextColor('text-danger')">change to red</button>
+        <button class="btn btn-outline-info" (click)="changeTextColor('text-info')">change to yellow</button>
+      </div>
+
+      <hr>
+
+      <p [ngClass]="isAwesome ? 'text-success' : 'text-danger'">It is good to be awesome</p>
+
+      <input type="checkbox" [(ngModel)]="isAwesome"> change color
+
+      <hr>
+       <div>
+        <p [ngClass]="userClass">Custom class</p>
+        <input type="text" [(ngModel)]="userClass" placeholder="ex: text-success">
+      </div>
+    </div>
+    <div class="col">
+      <p> Ng style directive - use to add or remove inline style </p>
+
+      <h5 [ngStyle]="{'color': ngStyle, 'font-size': '1.5rem' }"> using ng style attribute directive</h5>
+
+       <div>
+        <button class="btn btn-outline-warning m-4" (click)="updateColor('orange')">change to orange</button>
+        <button class="btn btn-outline-primary" (click)="updateColor('cyan')">change to blue</button>
+      </div>
+      <hr>
+      <div>
+         <p [ngStyle]="{'color': conditionStyle ? 'chartreuse' : 'darkblue' }">conditional styles</p>
+      <input type="checkbox" [(ngModel)]="conditionStyle">
+      </div>
+
+    <h5 [ngStyle]="customClass">custom styles</h5>
+
+    </div>
+
+  </div>
 
 </div>

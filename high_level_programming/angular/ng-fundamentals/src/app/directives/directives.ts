@@ -13,11 +13,26 @@ export class Directives {
   sectionTitle = '*ngIf vs @if block'
   sectionTitle2 = '*ngFor vs @for block'
   sectionTitle3 = 'ngSwitch vs @switch block'
+  sectionTitle4  = 'attribute directives'
   isBtnToggle = false;
   showElement = false;
 
+  textColor = 'text-secondary';
+  isAwesome = false;
+  userClass = ''
+  ngStyle = 'lightsalmon'
+  conditionStyle = false
+
   input1 = '';
   input2 = ''
+
+  customClass = {
+    'color': 'pink',
+    'height': '150px',
+    'width': '400px',
+    'padding': '.5rem',
+    'border': '1px solid blue'
+  }
 
   courses = ['Angular', 'Nest Js', 'Django', 'Laravel']
   courses2 = []
@@ -39,5 +54,13 @@ set(number: number) {
     this.classLevel = number;
 }
 
+changeTextColor(color: string) {
+  this.textColor = color;
+}
+
+
+updateColor(ngStyleColor: string) {
+  this.ngStyle = ngStyleColor
+}
 
 }
