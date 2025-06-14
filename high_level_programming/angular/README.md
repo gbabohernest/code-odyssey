@@ -7,3 +7,7 @@ following a structured roadmap with hands-on mini-projects  notes.
 A progressive plan to learn Angular fundamentals and intermediate features.
 - Day 1-2: Angular CLI & Project Setup
 - Day 3-5: Components & Data Binding
+- Day 6-8: Directives & Pipes
+- Day 9-11:  Routing & Navigation
+- Day 12-14: Services & Dependency Injection
+- Day 15-20: Forms (Template & Reactive)
