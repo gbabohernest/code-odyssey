@@ -34,7 +34,7 @@ export class Directives {
     'border': '1px solid blue'
   }
 
-  courses = ['Angular', 'Nest Js', 'Django', 'Laravel']
+  courses = ['Angular', 'Nest Js', 'Django', 'Laravel', 'Flask']
   courses2 = []
   classLevel = 0;
 toggleBtn (): void {
