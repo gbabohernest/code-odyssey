@@ -1,0 +1,24 @@
+<article>
+  <h1>{{ title }}</h1>
+
+  <div class="count">
+    @if (count > 0) {
+      <h2 [style]="{'color': 'green'}">{{ count }}</h2>
+
+    } @else if (count < 0) {
+
+      <h2 [style]="{'color': 'red'}">{{ count }}</h2>
+    } @else {
+      <h2>{{ count }}</h2>
+    }
+  </div>
+
+  <div class="btn">
+    <button (click)="decreaseCount()">-</button>
+    <button (click)="increaseCount()">+</button>
+  </div>
+
+  <button (click)="resetCount()">Reset</button>
+</article>
+
+<router-outlet/>
