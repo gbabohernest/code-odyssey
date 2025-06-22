@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, signal} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+
 
 @Component({
   selector: 'app-root',
@@ -10,17 +11,17 @@ import { RouterOutlet } from '@angular/router';
 export class App {
   protected title = 'Counter App';
 
-  count = 0;
+  count = signal(0);
 
   increaseCount (): void {
-    this.count++;
+    this.count.update(val => val + 1);
   }
 
   decreaseCount(): void {
-   this.count--;
+    this.count.set(this.count() - 1);
   }
 
   resetCount(): void {
-    this.count = 0;
+    this.count.set(0);
   }
 }
