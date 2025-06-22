@@ -2,14 +2,14 @@
   <h1>{{ title }}</h1>
 
   <div class="count">
-    @if (count > 0) {
-      <h2 [style]="{'color': 'green'}">{{ count }}</h2>
+    @if (count() > 0) {
+      <h2 [style]="{'color': 'green'}">{{ count() }}</h2>
 
-    } @else if (count < 0) {
+    } @else if (count() < 0) {
 
-      <h2 [style]="{'color': 'red'}">{{ count }}</h2>
+      <h2 [style]="{'color': 'red'}">{{ count() }}</h2>
     } @else {
-      <h2>{{ count }}</h2>
+      <h2>{{ count() }}</h2>
     }
   </div>
 
