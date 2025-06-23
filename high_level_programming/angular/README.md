@@ -11,6 +11,7 @@ A progressive plan to learn Angular fundamentals and intermediate features.
 - Day 9-11:  Routing & Navigation
 - Day 12-14: Services & Dependency Injection
 - Day 15-20: Forms (Template & Reactive)
+- Day 21-23: HTTP & APIs
 
 
 ## Mini Projects
