@@ -13,6 +13,7 @@ A progressive plan to learn Angular fundamentals and intermediate features.
 - Day 15-20: Forms (Template & Reactive)
 - Day 21-23: HTTP & APIs
 - Day 24-26: Component Interaction
+- Day 27-28: Lifecycle Hooks
 
 
 ## Mini Projects
