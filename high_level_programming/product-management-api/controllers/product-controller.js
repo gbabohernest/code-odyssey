@@ -1,5 +1,5 @@
 import Product from "../models/product-model.js";
-// import { asyncMiddleware } from "../middlewares/async-wrapper.middleware.js";
+
 import { customError } from "../errors/api-error.js";
 
 const getProducts = async (req, res) => {
