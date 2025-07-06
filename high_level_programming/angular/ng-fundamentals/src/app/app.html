@@ -1,5 +1,14 @@
 <h3>{{title}}</h3>
-<app-data-binding/>
-<hr class="text-primary ">
-<app-directives/>
+<app-data-binding />
+<hr class="text-primary" />
+<app-directives />
+
+<hr />
+
+<ul>
+  @for(course of courses; track course) {
+  <li>Name: {{course.name}} - level: {{course.level}}</li>
+  }
+</ul>
+
 <router-outlet />
