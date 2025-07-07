@@ -1,3 +1,3 @@
 # 🚀 High level Projects written in (JavaScript || Python)
 
-`scripting`, `dsa`, `logic` `api`
+`scripting`, `dsa`, `logic` `API`
