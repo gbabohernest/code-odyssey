@@ -4,6 +4,8 @@ import { DataBinding } from './data-binding/data-binding';
 import { Directives } from './directives/directives';
 import { Courses } from './services/courses';
 import { CurrencyPipe, DecimalPipe, UpperCasePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { TitleCasePipePipe } from './pipes/title-case-pipe-pipe';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +16,8 @@ import { CurrencyPipe, DecimalPipe, UpperCasePipe } from '@angular/common';
     CurrencyPipe,
     UpperCasePipe,
     DecimalPipe,
+    FormsModule,
+    TitleCasePipePipe,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -26,6 +30,8 @@ export class App {
   numOfStudents = 5024;
   rating = 4.821;
   pipeTitle = 'testing pipe';
+
+  text = '';
 
   constructor(private course: Courses) {
     this.courses = course.getCourses();

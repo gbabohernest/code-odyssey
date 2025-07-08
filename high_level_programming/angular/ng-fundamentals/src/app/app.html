@@ -15,4 +15,11 @@
 <p>{{price | currency}}</p>
 <p>{{rating | number:'1.2-2'}}</p>
 
+<hr />
+
+<p>Custom Pipe</p>
+<input type="text" [(ngModel)]="text" />
+<br />
+{{text | titleCasePipe}}
+
 <router-outlet />
