@@ -7,6 +7,7 @@ import { CurrencyPipe, DecimalPipe, UpperCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TitleCasePipePipe } from './pipes/title-case-pipe-pipe';
 import { Button } from './components/button/button';
+import { BoostrapPanel } from './components/boostrap-panel/boostrap-panel';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +21,7 @@ import { Button } from './components/button/button';
     FormsModule,
     TitleCasePipePipe,
     Button,
+    BoostrapPanel,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',

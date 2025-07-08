@@ -27,4 +27,11 @@
 <span>Passing data between components</span>
 
 <app-button [value]="dataValue" (myCustomEvent)="changeBg()" />
+
+<hr />
+<p>Ng content</p>
+<app-boostrap-panel>
+  <h5 class="card-title">Card Title is a custom title</h5>
+  <p class="card-text">Some text for the card</p>
+</app-boostrap-panel>
 <router-outlet />
