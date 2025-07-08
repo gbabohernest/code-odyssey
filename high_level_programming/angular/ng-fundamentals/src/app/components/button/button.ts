@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-button',
@@ -8,4 +8,9 @@ import { Component, Input } from '@angular/core';
 })
 export class Button {
   @Input() value = 'Share data b/w components';
+  @Output() myCustomEvent = new EventEmitter();
+
+  log() {
+    this.myCustomEvent.emit();
+  }
 }

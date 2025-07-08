@@ -40,4 +40,8 @@ export class App {
   constructor(private course: Courses) {
     this.courses = course.getCourses();
   }
+
+  changeBg() {
+    console.log('Output decorator works');
+  }
 }

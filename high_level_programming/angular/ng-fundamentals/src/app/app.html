@@ -26,5 +26,5 @@
 <p>Component Relationship</p>
 <span>Passing data between components</span>
 
-<app-button [value]="dataValue" />
+<app-button [value]="dataValue" (myCustomEvent)="changeBg()" />
 <router-outlet />
