@@ -28,7 +28,7 @@ const startSever = async () => {
   try {
     await connectToDatabase();
     app.listen(port, () => {
-      console.log(`Task Manager Api is running on http://localhost:${port}`);
+      console.log(`Task Manager API is running on http://localhost:${port}`);
     });
   } catch (error) {
     console.error(error.message);
