@@ -6,6 +6,7 @@ import { Courses } from './services/courses';
 import { CurrencyPipe, DecimalPipe, UpperCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TitleCasePipePipe } from './pipes/title-case-pipe-pipe';
+import { Button } from './components/button/button';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ import { TitleCasePipePipe } from './pipes/title-case-pipe-pipe';
     DecimalPipe,
     FormsModule,
     TitleCasePipePipe,
+    Button,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -32,6 +34,8 @@ export class App {
   pipeTitle = 'testing pipe';
 
   text = '';
+
+  dataValue = 'Parent to child value';
 
   constructor(private course: Courses) {
     this.courses = course.getCourses();
