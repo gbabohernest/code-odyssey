@@ -2,9 +2,10 @@ import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ZodSerializationException, ZodValidationPipe } from 'nestjs-zod';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
-  imports: [UsersModule],
+  imports: [DatabaseModule, UsersModule],
   providers: [
     {
       provide: APP_PIPE,
