@@ -17,8 +17,8 @@ code-odyssey is a collection of projects exploring key programming concepts. It 
 | Language/Framework | Description                                          |
 | ------------------ | ---------------------------------------------------- |
 | **C**              | System programming and algorithm implementation      |
-| **JavaScript**     | Web development (Node.js) and API creation (Express) |
+| **JavaScript | Typescript**     | Web development (Node.js) and API creation (Express) | (Nest Js) |
 
 ### Purpose
 
-This repository is a space for experimenting, learning and sharpening me skills as a developer. Each project is a step forward in mastering the craft.
+This repository is a space for experimenting, learning, and sharpening my skills as a developer. Each project is a step forward in mastering the craft.
