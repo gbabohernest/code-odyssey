@@ -1,70 +1,46 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { randomUUID } from 'node:crypto';
-import { CreateUser, UpdateUser, User } from './schema/user.schema';
+import { CreateUser, UpdateUser } from './schema/user.schema';
+import { EntityManager, Repository } from 'typeorm';
+import { Users } from './entities/users.entities';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UsersService {
-  private users: User[] = [
-    {
-      id: randomUUID(),
-      name: 'John Doe',
-      email: 'john@example.com',
-      password: 'strong_password',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
+  constructor(
+    @InjectRepository(Users)
+    private readonly usersRepository: Repository<Users>,
+    private readonly entityManager: EntityManager,
+  ) {}
 
-    {
-      id: randomUUID(),
-      name: 'Sarah Jones',
-      email: 'sarah@email.com',
-      password: 'cool-password',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-  ];
-
-  findAll(): User[] {
-    return this.users;
+  async findAll(): Promise<Users[]> {
+    return await this.usersRepository.find();
   }
 
-  findOne(id: string): User {
-    const user = this.users.find((u) => u.id === id);
-    if (!user) throw new NotFoundException(`User with id ${id} not found`);
+  async findOne(id: string): Promise<Users> {
+    const user = await this.usersRepository.findOneBy({ id });
+    if (!user) throw new NotFoundException('No User found!');
+
     return user;
   }
 
-  create(data: CreateUser): User {
-    const user = {
-      id: randomUUID(),
-      ...data,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-    this.users.push(user);
-    return user;
+  async create(data: CreateUser): Promise<Users> {
+    const user = new Users(data);
+    return await this.entityManager.save(user);
   }
 
-  update(id: string, data: UpdateUser): User {
-    const index = this.users.findIndex((u) => u.id === id);
+  async update(id: string, payload: UpdateUser) {
+    const user = await this.usersRepository.findOneBy({ id });
+    if (!user) throw new NotFoundException('No user found');
 
-    if (index === -1)
-      throw new NotFoundException(`User with id ${id} was not found`);
-
-    this.users[index] = {
-      ...this.users[index],
-      ...data,
-      updatedAt: new Date().toISOString(),
-    };
-
-    return this.users[index];
+    Object.assign(user, payload);
+    return await this.entityManager.save(user);
   }
 
-  remove(id: string) {
-    const index = this.users.findIndex((u) => u.id === id);
-    if (index === -1)
-      throw new NotFoundException(`User with id ${id} was not found`);
+  async remove(id: string) {
+    const result = await this.usersRepository.delete({ id });
 
-    this.users.splice(index, 1);
+    if (result.affected === 0) {
+      throw new NotFoundException('No User Found');
+    }
   }
 }
